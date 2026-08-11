@@ -16,8 +16,8 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
     <!-- Região viva para leitores de tela: anuncia pontuação e eventos sem poluir a tela -->
     <div id="regiao-anuncios" class="apenas-leitor" aria-live="polite" aria-atomic="true"></div>
 
@@ -201,16 +201,23 @@
     <audio id="som-erro" preload="none" src="assets/audio/som-erro.mp3"></audio>
     <audio id="som-vitoria" preload="none" src="assets/audio/som-vitoria.mp3"></audio>
 
-    <!-- 4. WIDGET VLIBRAS (Governo Federal) -->
+    <script src="app.js"></script>
+
     <div vw class="enabled">
         <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
             <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
+    
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script> new window.VLibras.Widget('https://vlibras.gov.br/app'); </script>
-
-    <script src="app.js"></script>
+    <script>
+        // Garante que a biblioteca e o DOM já foram carregados
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.VLibras) {
+                new window.VLibras.Widget('https://vlibras.gov.br/app');
+            }
+        });
+    </script>
 </body>
 </html>

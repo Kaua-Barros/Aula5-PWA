@@ -240,6 +240,10 @@ body.dark-mode :focus-visible { outline-color: #fbbf24; }
     border-bottom: 4px solid var(--border-color); z-index: 5; transition: height 0.3s ease;
 }
 
+[vw] {
+    z-index: 999999 !important;
+}
+
 /* Barra de placar em fluxo normal (não flutua sobre o jogo) — reserva
    espaço próprio, então nunca cobre as bolinhas nem o atirador. */
 #hud-jogo {
