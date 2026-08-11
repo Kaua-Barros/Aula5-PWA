@@ -330,3 +330,21 @@ body.dark-mode :focus-visible { outline-color: #fbbf24; }
     .card-inicio h1 { font-size: 1.6rem; }
     .placar-box { font-size: 0.9rem; padding: 4px 8px; }
 }
+
+.install-pwa-btn {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 200;
+    background: var(--btn-success);
+    color: #fff;
+    border: 3px solid #14532d;
+    border-radius: 12px;
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--sombra-cor);
+}
+.install-pwa-btn:active { transform: translateX(-50%) translateY(3px); }

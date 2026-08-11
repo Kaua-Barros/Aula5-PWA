@@ -843,11 +843,56 @@ atualizarSpriteAtirador(ang) {
 };
 
 /* -------------------------------------------------------------------------
+   INSTALAÇÃO PWA: captura o prompt nativo e controla o botão customizado.
+   ------------------------------------------------------------------------- */
+const pwaInstall = {
+    promptEvento: null,
+    btn: null,
+
+    init() {
+        this.btn = document.getElementById('installPwaBtn');
+        if (!this.btn) return;
+
+        // Se já estiver rodando como app instalado, nem mostra o botão
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            return;
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            this.promptEvento = e;
+            this.btn.hidden = false;
+        });
+
+        this.btn.addEventListener('click', () => this.instalar());
+
+        window.addEventListener('appinstalled', () => {
+            this.btn.hidden = true;
+            this.promptEvento = null;
+            a11y.falar('Aplicativo instalado com sucesso!');
+        });
+    },
+
+    async instalar() {
+        if (!this.promptEvento) return;
+        audio.tocar('clique');
+        this.promptEvento.prompt();
+        const escolha = await this.promptEvento.userChoice;
+        if (escolha.outcome === 'accepted') {
+            a11y.falar('Instalando aplicativo.');
+        }
+        this.promptEvento = null;
+        this.btn.hidden = true;
+    }
+};
+
+/* -------------------------------------------------------------------------
    INICIALIZAÇÃO E PWA
    ------------------------------------------------------------------------- */
 window.onload = () => {
     a11y.init();
     jogo.init();
+    pwaInstall.init();
 
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(() => {
@@ -855,3 +900,4 @@ window.onload = () => {
         });
     }
 };
+
